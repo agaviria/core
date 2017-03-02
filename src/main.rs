@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate log;
 extern crate iron;
+#[macro_use]
 extern crate router;
 extern crate time;
 extern crate simplelog;

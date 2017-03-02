@@ -1,7 +1,6 @@
 use iron::{Handler, IronResult, Response, Request, Iron};
 use iron::prelude::*;
 use iron::status;
-use router::Router;
 use simplelog::{Config, TermLogger, LogLevelFilter};
 
 use super::RequestLogger;
@@ -25,8 +24,9 @@ pub fn start(port: &str, quiet: bool) {
     let echo = Ctx { msg: String::from("Pong!") };
 
     // declaring router
-    let mut router = Router::new();
-    router.get("/", echo, "ping");
+    let router = router! {
+        get_ping: get "/ping" =>  echo,
+    };
 
     // chain methods [log]
     let mut chain = Chain::new(router);
