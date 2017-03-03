@@ -8,3 +8,6 @@ Cargo.lock
 
 # Used for environment variables
 .env
+
+#npm
+/node_modules/

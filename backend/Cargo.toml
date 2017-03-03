@@ -1,0 +1,16 @@
+[package]
+authors = ["Alejandro Gaviria <mr.gaviria@gmail.com>"]
+name = "core"
+version = "0.1.0"
+
+[dependencies]
+iron = "0.5.1"
+lazy_static = "0.2.2"
+log = "0.3.6"
+mime = "0.2.2"
+router = "0.5.1"
+serde = "0.9.10"
+serde_derive = "0.9.10"
+serde_json = "0.9.8"
+simplelog = "0.4.2"
+time = "0.1.36"
