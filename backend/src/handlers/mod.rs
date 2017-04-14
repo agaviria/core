@@ -36,10 +36,10 @@ impl FromStr for Date {
         let parts = s.split('-').collect::<Vec<_>>();
         if parts.len() == 3 {
             Ok(Date {
-                year: parts[0].parse::<i32>().map_err(|_| DateParseError)?,
-                month: parts[1].parse::<i32>().map_err(|_| DateParseError)?,
-                day: parts[2].parse::<i32>().map_err(|_| DateParseError)?,
-            })
+                   year: parts[0].parse::<i32>().map_err(|_| DateParseError)?,
+                   month: parts[1].parse::<i32>().map_err(|_| DateParseError)?,
+                   day: parts[2].parse::<i32>().map_err(|_| DateParseError)?,
+               })
         } else {
             Err(DateParseError)
         }
@@ -51,7 +51,8 @@ impl Deserialize for Date {
         where D: Deserializer
     {
         let date_str: String = try!(Deserialize::deserialize(deserializer));
-        date_str.parse::<Date>()
+        date_str
+            .parse::<Date>()
             .map_err(|_| D::Error::custom("invalid date format"))
     }
 }
@@ -147,17 +148,12 @@ pub fn handle_post_new_event(request: &mut Request) -> IronResult<Response> {
 }
 
 fn find_next_id(events: &Vec<Event>) -> i32 {
-    events.iter()
-        .fold(1, |id, event| {
-            if let Some(id_) = event.id {
-                if id <= id_ {
-                    id_ + 1
-                } else {
-                    id
-                }
-            } else {
-                id
-            }
+    events
+        .iter()
+        .fold(1, |id, event| if let Some(id_) = event.id {
+            if id <= id_ { id_ + 1 } else { id }
+        } else {
+            id
         })
 }
 
