@@ -1,11 +1,9 @@
 //! ping test handler
-use iron::{Handler, Request, Response, IronResult};
 use iron::status;
+use iron::prelude::*;
 
-pub struct Ping;
+use services::storage::DbPooledConnection;
 
-impl Handler for Ping {
-    fn handle(&self, _: &mut Request) -> IronResult<Response> {
-        Ok(Response::with((status::Ok, format!("Pong!"))))
-    }
+pub fn ping(_: &mut Request, _: DbPooledConnection) -> IronResult<Response> {
+    Ok(Response::with((status::Ok, format!("Pong!"))))
 }
