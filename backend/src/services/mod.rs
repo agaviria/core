@@ -2,6 +2,7 @@ extern crate iron;
 extern crate time;
 
 pub mod server;
+pub mod storage;
 
 use iron::prelude::*;
 use iron::{BeforeMiddleware, AfterMiddleware, typemap};
@@ -11,7 +12,9 @@ pub struct RequestLogger;
 
 impl RequestLogger {
     fn start(&self, request: &mut Request) {
-        request.extensions.insert::<RequestLogger>(precise_time_ns());
+        request
+            .extensions
+            .insert::<RequestLogger>(precise_time_ns());
     }
 
     fn elapsed_time(&self, request: &mut Request) -> Result<u64, IronError> {
