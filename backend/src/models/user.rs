@@ -8,9 +8,9 @@ use uuid::Uuid
 pub struct Auth {
     pub id: i32,
     pub salt: Vec<u8>,
-    pub password: Vec<u8>,
-    pub created_at: chrono::DateTime<chrono::UTC>,
-    pub last_updated: chrono::DateTime<chrono::UTC>,
+    pub pwd: Vec<u8>,
+    pub date_created: chrono::DateTime<chrono::UTC>,
+    pub date_modified: chrono::DateTime<chrono::UTC>,
 }
 
 impl Auth {
@@ -25,21 +25,37 @@ impl Auth {
    } 
 }
 
+#[derive(Insertable)]
+#[table_name="auth"]
+pub struct NewAuth {
+    pub salt: Vec<u8>,
+    pub pwd: Vec<u8>,
+}
+
+impl NewAuth {
+    pub fn new() {
+        unimplemented!(); 
+    }
+
+    pub fn create() {
+        unimplemented!(); 
+    }
+}
+
 // TODO: (Authentication Infrastructure)
-// * Add auth table to migrations
-// * implement NewUser and create method
-// * Create NewAuth with new and create methods
-// * Fix user migrations and mock data to include { level_, uuid_, last_updated } field types
+// * implement NewAuth, NewUser with methods (new and create)
+// * Fix mock data to value inserts 
+// * Create profiles table for personal user information
+// * implement authentication with salt hashing looking at libsodium or Argon2
 
 #[derive(Debug, Queryable, Serialize)]
 pub struct User {
     id: i32,
     level_: i32,
-    name: String,
     email: String,
     uuid_: Uuid,
-    created_at: chrono::DateTime<chrono::UTC>,
-    last_updated: chrono::DateTime<chrono::UTC>,
+    date_created: chrono::DateTime<chrono::UTC>,
+    date_modified: chrono::DateTime<chrono::UTC>,
 }
 
 #[derive(Insertable)]
@@ -49,6 +65,16 @@ pub struct NewUser {
     pub email: String,
     pub uuid_: Uuid,
     pub level_: i32,
+}
+
+impl NewUser {
+    pub fn new() {
+        unimplemented!(); 
+    }
+
+    pub fn create() {
+        unimplemented!(); 
+    }
 }
 
 pub fn get_user_by_email(conn: &PgConnection, get_email: &str) -> Result<User, DieselError> {
