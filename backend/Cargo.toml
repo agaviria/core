@@ -18,6 +18,7 @@ serde_derive = "0.9.10"
 serde_json = "0.9.8"
 simplelog = "0.4.2"
 time = "0.1.36"
+uuid = "0.5.0"
 
 [dependencies.chrono]
 features = ["serde"]

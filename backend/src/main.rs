@@ -10,6 +10,7 @@ extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
 extern crate mount;
+extern crate uuid;
 extern crate time;
 extern crate chrono;
 extern crate simplelog;

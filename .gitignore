@@ -10,5 +10,8 @@ Cargo.lock
 # Used for environment variables
 .env
 
+# temporary vim buffers
+*.rs.swp
+
 #npm
 /node_modules/

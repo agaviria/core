@@ -1,7 +1,6 @@
 use iron::IronResult;
 use iron::Response as IronResponse;
 use iron::status::Status;
-// use json::Error;
 use std::convert::Into;
 use services::error::ErrorResponse;
 
