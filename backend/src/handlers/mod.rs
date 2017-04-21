@@ -8,24 +8,26 @@ use iron::{Response, Request, IronResult};
 use iron::status;
 
 use services::storage::DbPooledConnection;
-use models::user::User;
+use services::response;
+use models::user::*;
 use db_schema::users;
 
+use std::error::Error;
+
+// GET user/:email
 pub fn get_user(req: &mut Request, conn: DbPooledConnection) -> IronResult<Response> {
     let ref user_id = req.extensions
         .get::<Router>()
         .unwrap()
-        .find("id")
+        .find("email")
         .unwrap_or("/");
-    let user_id = user_id.parse::<i32>().unwrap();
+    let user_email = user_id.to_string();
 
-    let user_data = users::table
-        .filter(users::id.eq(user_id))
-        .load::<User>(&*conn);
-
-    let ref user_data = &user_data.unwrap()[0];
-
-    let response_data = serde_json::to_string(user_data).unwrap();
-
-    Ok(Response::with((status::Ok, response_data)))
+    // check if the request executed with success
+    match get_user_by_email(&*conn, &user_email) {
+        Ok(u) => response::ok(serde_json::to_string(&u).unwrap()),
+        Err(e) => {
+            response::bad_request(format!("email does not exist in database {}", e.description()))
+        }
+    }
 }

@@ -3,6 +3,8 @@ extern crate time;
 
 pub mod server;
 pub mod storage;
+pub mod response;
+pub mod error;
 
 use iron::prelude::*;
 use iron::{BeforeMiddleware, AfterMiddleware, typemap};

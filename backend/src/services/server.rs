@@ -49,9 +49,8 @@ pub fn declare_endpoints(pool: DbConnectionPool) -> Mount {
 
     route_endpoints!(
         pool, routes, "/user/",
-        "get_user" => get, "/:id", handlers::get_user 
-        // "get_many_events" => get, "/events", handlers::handle_get_many_events,
-        // "post_new_events" => post, "/events", handlers::handle_post_new_event
+        "get_user" => get, "/:email", handlers::get_user 
+        // TODO:  add more endpoints
      );
 
     routes

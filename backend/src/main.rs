@@ -1,17 +1,15 @@
 #[macro_use]
 extern crate log;
 #[macro_use]
-extern crate lazy_static;
+extern crate router;
 extern crate iron;
 #[macro_use]
-extern crate router;
-// #[macro_use]
-// extern crate mime;
-extern crate mount;
-extern crate serde;
+extern crate mime;
 #[macro_use]
 extern crate serde_derive;
+extern crate serde;
 extern crate serde_json;
+extern crate mount;
 extern crate time;
 extern crate chrono;
 extern crate simplelog;
