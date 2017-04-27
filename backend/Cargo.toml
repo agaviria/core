@@ -4,6 +4,7 @@ name = "core"
 version = "0.1.0"
 
 [dependencies]
+argon2rs = "0.2.5"
 dotenv = "0.10.0"
 iron = "0.5.1"
 lazy_static = "0.2.2"
