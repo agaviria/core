@@ -18,13 +18,10 @@ pub fn generate_salt() -> Result<Vec<u8>> {
 }
 
 /// Hash a password with Argon2
-pub fn hash(pwd: &str) -> Result<Vec<u8>> {
-    let salt = generate_salt()?;
-
+pub fn hash(pwd: &str, salt: &[u8]) -> Result<Vec<u8>> {
     if salt.len() != 16 || (string.len() == 0 || string.len() > 72) {
         bail!("Salt or string generation error.");
     }
-
     let encoded_hash = Encoded::default2i(pwd.as_bytes(), &salt, &[], &[]).to_u8();
     Ok(encoded_hash.iter().cloned().collect::<Vec<u8>>())
 }

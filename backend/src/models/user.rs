@@ -9,7 +9,6 @@ use uuid::Uuid;
 use db_schema::users;
 
 // TODO:
-// * Complete Authentication Infrastructure
 // * Create profiles table for personal user information
 
 #[derive(Debug, Queryable, Serialize)]
