@@ -1,3 +1,5 @@
+#![feature(custom_attribute)]
+
 #[macro_use]
 extern crate log;
 #[macro_use]
@@ -14,18 +16,19 @@ extern crate uuid;
 extern crate time;
 extern crate chrono;
 extern crate simplelog;
-extern crate r2d2;
-extern crate r2d2_diesel;
 #[macro_use]
 extern crate diesel;
 #[macro_use]
 extern crate diesel_codegen;
-extern crate dotenv;
+extern crate r2d2;
+extern crate r2d2_diesel;
 
-pub mod services;
+extern crate dotenv;
+pub mod crypto;
+pub mod db_schema;
 pub mod handlers;
 pub mod models;
-pub mod db_schema;
+pub mod services;
 
 fn main() {
     // start sets up logger, routes and listens on host parameter
