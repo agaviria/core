@@ -1,12 +1,13 @@
 use chrono;
 use diesel::prelude::*;
+use diesel::{ExpressionMethods, LoadDsl, FilterDsl};
 use diesel::result::Error as DieselError;
 use diesel::pg::PgConnection;
 use uuid::Uuid;
 use serde_json;
 
 use db_schema::auth;
-use crypto::*;
+use crypto;
 
 #[table_name = "auth"]
 #[derive(Debug, Queryable, Serialize)]
@@ -20,7 +21,6 @@ pub struct Auth {
 
 impl Auth {
     pub fn get_id(conn: &PgConnection, id: &i32) -> Result<Auth, DieselError> {
-        use diesel::{LoadDsl, FilterDsl, ExpressionMethods};
         use db_schema::auth::dsl::*;
 
         let auth_id = id.parse::<i32>().unwrap();
@@ -48,10 +48,10 @@ impl NewAuth {
     }
 
     pub fn save(&self, conn: &PgConnection) -> Result<Auth, DieselError> {
-        use diesel::{LoadDsl, FilterDsl, ExpressionMethods};
-        use db_schema::users::dsl::*;
+        use diesel::insert;
+        use db_schema::auth::dsl::*;
 
-        diesel::insert(self)
+        insert(self)
             .into(auth::table)
             .get_result(conn)
             .expect("Error! Failed to save credentials into auth table.")

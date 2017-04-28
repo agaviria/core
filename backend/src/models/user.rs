@@ -2,11 +2,12 @@ use chrono;
 use diesel::prelude::*;
 use diesel::result::Error as DieselError;
 use diesel::pg::PgConnection;
-use diesel::ExpressionMethods;
-use serde_json;
+use diesel::{ExpressionMethods, LoadDsl, FilterDsl};
 use uuid::Uuid;
+use serde_json;
 
 use db_schema::users;
+use models::authz::Auth;
 
 // TODO:
 // * Create profiles table for personal user information
@@ -42,10 +43,10 @@ impl NewUser {
     }
 
     pub fn save(&self, conn: &PgConnection) -> Result<User, DieselError> {
-        use diesel::{LoadDsl, FilterDsl, ExpressionMethods};
+        use diesel::insert;
         use db_schema::users::dsl::*;
 
-        diesel::insert(self)
+        insert(self)
             .into(users::table)
             .get_result(conn)
             .expect("Error! Failed to save new user.")
@@ -53,7 +54,6 @@ impl NewUser {
 }
 
 pub fn get_user_by_email(conn: &PgConnection, get_email: &str) -> Result<User, DieselError> {
-    use diesel::{LoadDsl, FilterDsl, ExpressionMethods};
     use db_schema::users::dsl::*;
 
     users
